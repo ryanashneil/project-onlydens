@@ -1,5 +1,5 @@
 import { useSWRInfinite } from "swr";
-import { RedditResponse } from "@od/types";
+import { Post, RedditResponse } from "@od/types";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -32,7 +32,9 @@ export const useReddit = (subreddits: string[], sort: string = "hot") => {
   const isEmpty = data?.[0]?.length === 0;
   const isReachingEnd = isEmpty || !data?.[data.length - 1]?.data?.after;
 
-  const posts = fetched.map((p: RedditResponse) => transformPost(p));
+  const posts = fetched
+    .map((p: RedditResponse) => transformPost(p))
+    .filter((p: Post) => p.src);
 
   return {
     posts,
@@ -45,14 +47,14 @@ export const useReddit = (subreddits: string[], sort: string = "hot") => {
   };
 };
 
-export const transformPost = (post: RedditResponse, mediaSizeIndex = 3) => {
+export const transformPost = (post: RedditResponse, size = 3): Post => {
   const { id, title, author, ups, preview, created_utc, permalink } = post.data;
 
-  let src = "https://via.placeholder.com/275?text=Error%20loading%20image";
+  let src = "";
   try {
     const resolutions = preview.images[0].resolutions;
-    if (resolutions[mediaSizeIndex]) {
-      src = resolutions[mediaSizeIndex].url;
+    if (resolutions[size]) {
+      src = resolutions[size].url;
     } else {
       src = resolutions[resolutions.length - 1].url;
     }

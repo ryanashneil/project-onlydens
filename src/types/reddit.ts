@@ -1,7 +1,7 @@
 export type Post = {
   id: string;
   title: string;
-  src: string;
+  src?: string;
   author: string;
   ups: number;
   createdAt: string;
