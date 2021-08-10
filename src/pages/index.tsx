@@ -2,7 +2,13 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "@od/styles/Home.module.css";
 
+import { useReddit } from "@od/hooks";
+
+const subreddits = ["RoomPorn", "InteriorDesign"];
+
 export default function Home() {
+  const { posts } = useReddit(subreddits);
+
   return (
     <div className={styles.container}>
       <Head>
