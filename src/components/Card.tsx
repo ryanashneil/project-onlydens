@@ -1,30 +1,31 @@
-import { motion } from "framer-motion";
-import { Box, Flex, Img, Link, Text } from "@chakra-ui/react";
 import { Post } from "@od/types";
+import { motion } from "framer-motion";
 
-const MotionImg = motion(Img);
+import {
+  Avatar,
+  Box,
+  Flex,
+  HStack,
+  Img,
+  Link,
+  Stack,
+  Text
+} from "@chakra-ui/react";
 
 type Props = {
   post: Post;
 };
 
-const Card = ({ post }: Props): JSX.Element => {
-  return (
-    <Box bg="gray.100" borderRadius={["sm", null, "md"]} overflow="hidden">
-      <Box cursor="pointer" position="relative" overflow="hidden">
-        <MotionImg
-          transition={{ duration: 0.3 }}
-          whileHover={{ scale: 1.1 }}
-          w="100%"
-          h="100%"
-          objectFit="cover"
-          src={post.src}
-        />
-      </Box>
-      <Flex px="4" py="2" align="center" justify="space-between" w="100%">
-        <Text fontSize={["xs", null, "sm"]}>
-          Posted by{" "}
+const MotionImg = motion(Img);
+
+const Card = ({ post }: Props): JSX.Element => (
+  <Stack border="1px solid" borderColor="gray.200" overflow="hidden">
+    <Flex align="center" justify="space-between" w="100%" p="1rem" pb="0">
+      <HStack>
+        <Avatar name={post.author} />
+        <Text fontSize="md">
           <Link
+            color="gray.600"
             fontWeight="semibold"
             href={`https://www.reddit.com/user/${post.author}/`}
             isExternal
@@ -32,14 +33,26 @@ const Card = ({ post }: Props): JSX.Element => {
             u/{post.author}
           </Link>
         </Text>
-        <Flex align="center">
-          <Text ml={1} fontSize={["xs", null, "sm"]}>
-            {post.ups.toLocaleString()}
-          </Text>
-        </Flex>
-      </Flex>
+      </HStack>
+      <Text color="gray.500">{post.createdAt}</Text>
+    </Flex>
+    <Text p="1rem">{post.title}</Text>
+    <Box cursor="pointer" position="relative" overflow="hidden">
+      <MotionImg
+        transition={{ duration: 0.3 }}
+        whileHover={{ scale: 1.1 }}
+        w="100%"
+        h="100%"
+        objectFit="cover"
+        src={post.src}
+      />
     </Box>
-  );
-};
+    <HStack p="1rem" fontSize="sm">
+      <Text>{post.ups.toLocaleString()} likes</Text>
+      <Text>•</Text>
+      <Text>{post.comments.toLocaleString()} comments</Text>
+    </HStack>
+  </Stack>
+);
 
 export default Card;

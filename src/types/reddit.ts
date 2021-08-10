@@ -4,6 +4,7 @@ export type Post = {
   src?: string;
   author: string;
   ups: number;
+  comments: number;
   createdAt: string;
   permalink: string;
   isGallery: boolean;
@@ -15,6 +16,7 @@ export type RedditResponse = {
     id: string;
     title: string;
     created_utc: number;
+    num_comments: number;
     ups: number;
     author: string;
     permalink: string;

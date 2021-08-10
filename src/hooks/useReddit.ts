@@ -27,7 +27,7 @@ export const useReddit = (subreddits: string[], sort: string = "hot") => {
   );
 
   const fetched = data ? data.map((i) => i.data.children).flat() : [];
-  const isLoadingInitialData = !data && !error;
+  const isLoadingInitial = !data && !error;
   const isLoadingMore = size > 0 && data && !data[size - 1];
   const isEmpty = data?.[0]?.length === 0;
   const isReachingEnd = isEmpty || !data?.[data.length - 1]?.data?.after;
@@ -39,7 +39,7 @@ export const useReddit = (subreddits: string[], sort: string = "hot") => {
   return {
     posts,
     error,
-    isLoadingInitialData,
+    isLoadingInitial,
     isLoadingMore,
     size,
     setSize,
@@ -48,7 +48,16 @@ export const useReddit = (subreddits: string[], sort: string = "hot") => {
 };
 
 export const transformPost = (post: RedditResponse, size = 3): Post => {
-  const { id, title, author, ups, preview, created_utc, permalink } = post.data;
+  const {
+    id,
+    title,
+    author,
+    ups,
+    preview,
+    created_utc,
+    permalink,
+    num_comments
+  } = post.data;
 
   let src = "";
   try {
@@ -68,6 +77,7 @@ export const transformPost = (post: RedditResponse, size = 3): Post => {
     src,
     author,
     ups,
+    comments: num_comments,
     createdAt: dayjs.unix(created_utc).fromNow(),
     permalink: `https://reddit.com${permalink}`,
     isGallery: false
