@@ -8,7 +8,7 @@ import {
 const CardLoading = (): JSX.Element => (
   <Stack border="1px solid" borderColor="gray.200" overflow="hidden">
     <Stack spacing="1rem" padding="1rem">
-      <SkeletonCircle />
+      <SkeletonCircle size="48px" />
       <SkeletonText />
     </Stack>
     <Skeleton height="300px" />
