@@ -24,7 +24,7 @@ const Home = (): JSX.Element => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Nav />
-      <Container maxW="2xl" my="95px" flex={1}>
+      <Container maxW="2xl" my="4rem" flex={1}>
         <SimpleGrid columns={1} spacing={5} mt={6}>
           {posts.map((post) => (
             <Card key={post.id} post={post} />
@@ -43,6 +43,7 @@ const Home = (): JSX.Element => {
               borderRadius="full"
               onClick={() => setSize(size + 1)}
               isLoading={isLoadingMore}
+              size="lg"
             >
               😏 Load More
             </Button>

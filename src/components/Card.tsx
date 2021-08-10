@@ -30,11 +30,13 @@ const Card = ({ post }: Props): JSX.Element => (
             href={`https://www.reddit.com/user/${post.author}/`}
             isExternal
           >
-            u/{post.author}
+            {post.author}
           </Link>
         </Text>
       </HStack>
-      <Text color="gray.500">{post.createdAt}</Text>
+      <Text fontSize="sm" color="gray.500">
+        {post.createdAt}
+      </Text>
     </Flex>
     <Text p="1rem">{post.title}</Text>
     <Box cursor="pointer" position="relative" overflow="hidden">
